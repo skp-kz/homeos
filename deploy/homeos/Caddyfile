@@ -1,0 +1,53 @@
+# HomeOS: фронт (статика из /opt/homeos/web) + бэкенд tela на 127.0.0.1:8781.
+# Наружу — только через cloudflared (os.skp.kz → http://localhost:8780), за Cloudflare Access.
+{
+	admin localhost:2019
+	auto_https off
+}
+
+:8780 {
+	bind 127.0.0.1 ::1
+	encode zstd gzip
+	log {
+		output file /var/log/caddy/homeos-access.jsonl
+		format json
+	}
+
+	handle /api/internal/* {
+		respond 404
+	}
+	@backend path /api/* /ws/* /p/* /oauth/* /dav /dav/* /.well-known/oauth-protected-resource*
+	handle @backend {
+		reverse_proxy 127.0.0.1:8781
+	}
+	handle /openapi.json {
+		rewrite * /api/public/openapi.json
+		reverse_proxy 127.0.0.1:8781
+	}
+	@share_pdf_page path_regexp sharepdfpage ^/share/([^/]+)/p/([^/]+)\.pdf$
+	handle @share_pdf_page {
+		rewrite * /api/share/{re.sharepdfpage.1}/pdf?p={re.sharepdfpage.2}&{query}
+		reverse_proxy 127.0.0.1:8781
+	}
+	@share_pdf path_regexp sharepdf ^/share/([^/]+)\.pdf$
+	handle @share_pdf {
+		rewrite * /api/share/{re.sharepdf.1}/pdf
+		reverse_proxy 127.0.0.1:8781
+	}
+	@og path /f/*/og.png /discover/og.png /ask/og.png /graph/og.png /atlas/og.png
+	handle @og {
+		reverse_proxy 127.0.0.1:8781
+	}
+
+	handle /assets/* {
+		root * /opt/homeos/web
+		header Cache-Control "public, max-age=31536000, immutable"
+		file_server
+	}
+	handle {
+		root * /opt/homeos/web
+		header Cache-Control "no-cache"
+		try_files {path} /index.html
+		file_server
+	}
+}

@@ -1,0 +1,30 @@
+[Unit]
+Description=HomeOS (tela backend)
+After=network-online.target postgresql.service
+Wants=network-online.target
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=tela
+Group=tela
+WorkingDirectory=/opt/homeos
+# Несекретные настройки — здесь; секреты — только в /etc/homeos/env (кладёт Слава)
+Environment=TELA_ADDR=127.0.0.1:8781
+Environment=TELA_DATABASE_URL=postgres:///tela?host=/var/run/postgresql&sslmode=disable
+Environment=TELA_PUBLIC_BASE_URL=https://os.skp.kz
+Environment=TELA_LOG_FORMAT=json
+Environment=TELA_REGISTRATION_OPEN=false
+EnvironmentFile=/etc/homeos/env
+ExecStart=/opt/homeos/bin/tela
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/homeos
+StateDirectory=homeos
+
+[Install]
+WantedBy=multi-user.target

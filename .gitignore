@@ -15,3 +15,4 @@ app-*.png
 # regenerated artifacts that a `git add -A` would otherwise sweep into a commit.
 backend/tela
 backend/.vite/
+/bin/
