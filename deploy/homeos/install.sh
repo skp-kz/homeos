@@ -21,8 +21,8 @@ sudo install -d -o root -g root /opt/homeos/bin /opt/homeos/web
 sudo install -m 0755 bin/tela /opt/homeos/bin/tela
 sudo rsync -a --delete frontend/dist/ /opt/homeos/web/
 echo "$VER $COMMIT" | sudo tee /opt/homeos/VERSION >/dev/null
-sudo install -d -m 0750 -o root -g tela /etc/homeos
-[ -f /etc/homeos/env ] || { sudo install -m 0640 -o root -g tela /dev/null /etc/homeos/env; echo "!! /etc/homeos/env пуст — секреты кладёт Слава (см. env.example)"; }
+sudo install -d -m 0755 -o root -g root /etc/homeos
+[ -f /etc/homeos/env ] || { sudo install -m 0600 -o root -g root /dev/null /etc/homeos/env; echo "!! /etc/homeos/env пуст — секреты кладёт Слава (см. env.example)"; }
 
 # 4. systemd + Caddy
 sudo install -m 0644 deploy/homeos/tela.service /etc/systemd/system/tela.service
