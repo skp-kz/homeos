@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { router } from '../../routes/router'
 import { emitOpenPalette } from '../../lib/paletteEvent'
 import { emitOpenNewPage } from '../../lib/newPageEvent'
+import { emitEditPage } from '../../lib/editPageEvent'
 import { emitToggleSidebar } from '../../lib/sidebarEvent'
 import { cycleTheme } from '../../lib/theme'
 import { useKeymap, type KeymapActions } from '../../lib/keys/useKeymap'
@@ -28,6 +29,7 @@ export function KeymapHost() {
       navigate: (to) => void router.navigate({ to: to as never }),
       openPalette: () => emitOpenPalette('pages'),
       openNewPage: () => emitOpenNewPage(),
+      editPage: () => emitEditPage(),
       toggleTheme: () => cycleTheme(),
       toggleSidebar: () => emitToggleSidebar(),
       openCheatsheet: () => setCheatsheetOpen(true),

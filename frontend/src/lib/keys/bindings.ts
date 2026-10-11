@@ -80,6 +80,14 @@ registerKeys({
   run: (c) => c.openNewPage(),
 })
 registerKeys({
+  id: 'act.edit',
+  keys: 'e',
+  label: 'Edit page',
+  group: ACT,
+  when: 'app',
+  run: (c) => c.editPage(),
+})
+registerKeys({
   id: 'act.theme',
   keys: 't',
   label: 'Toggle theme',

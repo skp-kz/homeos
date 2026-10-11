@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { subscribeToEditPage } from '../../lib/editPageEvent'
 import {
   Link,
   useLocation,
@@ -580,6 +581,9 @@ function PageViewer({
       search: (prev) => ({ ...prev, edit: true }),
     })
   }, [navigate, spaceId, page.id, page.title, scrollRef])
+
+  // `e` (any layout) — same as the Edit button, only for editors.
+  useEffect(() => (canEdit ? subscribeToEditPage(enterEdit) : undefined), [canEdit, enterEdit])
 
   // SPA-navigate internal page links (MarkdownView emits plain <a href>);
   // without this they'd full-reload the whole app. This covers wikilinks AND

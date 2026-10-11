@@ -24,6 +24,7 @@ export interface KeyContext {
   navigate: (to: string) => void
   openPalette: () => void
   openNewPage: () => void
+  editPage: () => void
   toggleTheme: () => void
   toggleSidebar: () => void
   openCheatsheet: () => void

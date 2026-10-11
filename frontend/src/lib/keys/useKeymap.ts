@@ -27,6 +27,7 @@ export type KeymapActions = Pick<
   | 'navigate'
   | 'openPalette'
   | 'openNewPage'
+  | 'editPage'
   | 'toggleTheme'
   | 'toggleSidebar'
   | 'openCheatsheet'
@@ -102,6 +103,14 @@ function isLeader(token: string, surface: 'app' | 'public'): boolean {
   return false
 }
 
+// Letter keys match by physical position, so the keymap works in any layout
+// (Russian `у` is `e`, `с` is `c`). Non-letters keep their layout's `e.key`.
+function layoutFreeKey(e: KeyboardEvent): string {
+  const m = /^Key([A-Z])$/.exec(e.code)
+  if (!m || /^[a-zA-Z]$/.test(e.key) || e.key.length !== 1) return e.key
+  return e.shiftKey ? m[1] : m[1].toLowerCase()
+}
+
 // Window-level bare-key + leader-sequence dispatcher. Modifier combos
 // (Cmd/Ctrl) are intentionally left to useGlobalShortcut / the palette — this
 // layer ignores them so the two don't double-fire. Fires only in normal mode
@@ -139,7 +148,7 @@ export function useKeymap(actions: KeymapActions): void {
         return
       }
       const surface = currentSurface()
-      const key = e.key
+      const key = layoutFreeKey(e)
 
       // Mid-sequence: only the full `pending key` combo can match. Either way
       // the leader is consumed (no fall-through to a fresh single key).
