@@ -133,6 +133,12 @@ export function Sidebar({
             {searchShortcut}
           </kbd>
         </Button>
+        <Button asChild variant="ghost" size="sm" className={cn('w-full justify-start', navActive('/', true) && activeRow)}>
+          <Link to="/" aria-label="Home" title="Home">
+            <Home width={14} height={14} />
+            <span className="flex-1 text-left">Home</span>
+          </Link>
+        </Button>
         {/* Below the search field: one uniform row language. Ask is the landmark
             feature — distinguished ONLY by its accent sparkle icon; the label is
             normal text like every other row, so it never reads as "selected". */}
@@ -145,12 +151,6 @@ export function Sidebar({
           <Link to="/ask" aria-label="Ask your docs" title="Ask your docs">
             <Sparkles width={14} height={14} className="text-[var(--accent)]" />
             <span className="flex-1 text-left">Ask</span>
-          </Link>
-        </Button>
-        <Button asChild variant="ghost" size="sm" className={cn('w-full justify-start', navActive('/', true) && activeRow)}>
-          <Link to="/" aria-label="Home" title="Home">
-            <Home width={14} height={14} />
-            <span className="flex-1 text-left">Home</span>
           </Link>
         </Button>
         <Button asChild variant="ghost" size="sm" className={cn('w-full justify-start', navActive('/graph') && activeRow)}>
