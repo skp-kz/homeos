@@ -5,9 +5,9 @@ import { StubSidebar } from './apps/stub'
 
 // Док HomeOS. Порядок = ⌘1…⌘9. Новое приложение — одна строка; остальные не меняются.
 export const apps: AppDef[] = [
+  { id: 'inbox', title: 'Inbox', icon: Inbox, route: '/inbox', sidebar: StubSidebar },
+  { id: 'agents', title: 'Agents', icon: Bot, route: '/agents', sidebar: StubSidebar },
   { id: 'wiki', title: 'Wiki', icon: BookText, route: '/wiki', view: WikiView },
   { id: 'vault', title: 'Vault', icon: KeyRound, route: '/vault', sidebar: StubSidebar },
   { id: 'connections', title: 'Connections', icon: Plug, route: '/connections', sidebar: StubSidebar },
-  { id: 'agents', title: 'Agents', icon: Bot, route: '/agents', sidebar: StubSidebar },
-  { id: 'inbox', title: 'Inbox', icon: Inbox, route: '/inbox', sidebar: StubSidebar },
 ]
