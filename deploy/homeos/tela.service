@@ -13,6 +13,7 @@ WorkingDirectory=/opt/homeos
 Environment=TELA_ADDR=127.0.0.1:8781
 Environment=TELA_DATABASE_URL=postgres:///tela?host=/var/run/postgresql&sslmode=disable
 Environment=TELA_PUBLIC_BASE_URL=https://os.skp.kz
+Environment=TELA_MCP_RESOURCE=https://os.skp.kz/api/mcp
 Environment=TELA_LOG_FORMAT=json
 Environment=TELA_REGISTRATION_OPEN=false
 EnvironmentFile=/etc/homeos/env
