@@ -1,6 +1,5 @@
 import { Link, useParams, useRouterState } from '@tanstack/react-router'
 import {
-  BookOpen,
   FilePlus,
   FolderPlus,
   Home,
@@ -10,7 +9,6 @@ import {
   Sparkles,
   Wand2,
 } from 'lucide-react'
-import { DOCS } from '../../lib/docs'
 import { SpaceTree } from './SpaceTree'
 import { FavoritesSidebarSection } from './FavoritesSidebarSection'
 import { UserMenu } from './UserMenu'
@@ -166,18 +164,6 @@ export function Sidebar({
             <Wand2 width={14} height={14} />
             <span className="flex-1 text-left">Atlas</span>
           </Link>
-        </Button>
-        <Button asChild variant="ghost" size="sm" className="w-full justify-start">
-          <a
-            href={DOCS.home}
-            target="_blank"
-            rel="noopener"
-            aria-label="Documentation"
-            title="Documentation"
-          >
-            <BookOpen width={14} height={14} />
-            <span className="flex-1 text-left">Docs</span>
-          </a>
         </Button>
       </div>
       <FavoritesSidebarSection activePageId={activePageId} />
