@@ -36,7 +36,7 @@ export type InboxItem = {
 }
 
 export const agents: Agent[] = [
-  { id: 'dev', name: 'dev', initial: 'D', role: 'Claude Code · homeos', presence: 'online', status: 'Пишет приложение Inbox' },
+  { id: 'dev', name: 'dev', initial: 'D', role: 'Claude Code · homeos', presence: 'online', status: 'Пишет приложения HomeOS' },
   { id: 'kura', name: 'Кура', initial: 'К', role: 'OpenClaw · офис-менеджер', presence: 'waiting', status: 'Ждёт апрув · КП Зимину' },
   { id: 'arman', name: 'Арман', initial: 'А', role: 'Hermes · маркетинг', presence: 'offline', status: 'Был 1 ч назад' },
 ]

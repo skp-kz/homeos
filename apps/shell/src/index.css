@@ -6,6 +6,11 @@
 /* Палитры совпадают с темами tela (styles/themes/*.css), чтобы оболочка и Wiki выглядели одним целым. */
 :root,
 [data-theme="warm"] {
+  --info: #3d6a8a;
+  --info-soft: #dde8f0;
+  --sepia: #f1e6cf;
+  --sepia-ink: #4a3220;
+  --sepia-line: #a88a66;
   --bg: #fbf6ec;
   --surface: #fffdf8;
   --surface-2: #f4ecdd;
@@ -28,6 +33,11 @@
   --shadow: 0 12px 40px rgb(58 42 26 / 0.14);
 }
 [data-theme="light"] {
+  --info: #1d4ed8;
+  --info-soft: #e0eaff;
+  --sepia: #f3ead6;
+  --sepia-ink: #4a3220;
+  --sepia-line: #a88a66;
   --bg: #f7f7f8;
   --surface: #ffffff;
   --surface-2: #f1f1f4;
@@ -50,6 +60,11 @@
   --shadow: 0 12px 40px rgb(0 0 0 / 0.14);
 }
 [data-theme="dark"] {
+  --info: #7cb4dd;
+  --info-soft: #162736;
+  --sepia: #2a2219;
+  --sepia-ink: #e9d9bd;
+  --sepia-line: #7d6449;
   --bg: #121215;
   --surface: #18181c;
   --surface-2: #1e1e23;
@@ -91,6 +106,11 @@
   --color-warn-soft: var(--warn-soft);
   --color-bad: var(--bad);
   --color-bad-soft: var(--bad-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-sepia: var(--sepia);
+  --color-sepia-ink: var(--sepia-ink);
+  --color-sepia-line: var(--sepia-line);
   --color-hover: var(--hover);
   --color-overlay: var(--overlay);
   --shadow-pop: var(--shadow);

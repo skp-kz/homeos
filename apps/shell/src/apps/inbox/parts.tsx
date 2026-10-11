@@ -30,13 +30,14 @@ export function Avatar({ from, size = 28, presence = true }: { from: AgentId | '
   )
 }
 
-export function Chip({ tone = 'muted', children }: { tone?: 'muted' | 'accent' | 'ok' | 'warn' | 'bad'; children: React.ReactNode }) {
+export function Chip({ tone = 'muted', children }: { tone?: 'muted' | 'accent' | 'ok' | 'warn' | 'bad' | 'info'; children: React.ReactNode }) {
   const tones = {
     muted: 'bg-surface-2 text-muted',
     accent: 'bg-accent-soft text-accent',
     ok: 'bg-ok-soft text-ok',
     warn: 'bg-warn-soft text-warn',
     bad: 'bg-bad-soft text-bad',
+    info: 'bg-info-soft text-info',
   }
   return (
     <span className={cn('inline-flex items-center gap-1 rounded-full px-2 font-[family-name:var(--font-ui)] text-xs leading-[18px] font-medium whitespace-nowrap', tones[tone])}>
