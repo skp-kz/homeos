@@ -7,7 +7,6 @@ import {
   LogOut,
   MessageSquarePlus,
   Settings,
-  Sparkles,
 } from 'lucide-react'
 import { useLogout, useMe } from '../../lib/queries/auth'
 import { useTelaHomeHref } from '../../lib/queries/host-context'
@@ -35,12 +34,6 @@ export function UserMenu() {
   const user = me.data ?? null
   const planName = usage.data?.plan.name
   const feedbackUnseen = user?.feedback_unseen ?? 0
-  // The only self-serve personal upgrade is Free → Personal (the top paid
-  // personal tier; Unlimited is an internal comp tier). Show the prominent CTA
-  // exactly then, so it converts the people it's for and stays out of the way
-  // for everyone else. The billing tab still carries every tier + org upgrades.
-  const canUpgrade = usage.data?.plan.key === 'personal_free'
-
   function goToBilling() {
     void navigate({ to: '/settings', search: { tab: 'billing' } })
   }
@@ -59,16 +52,6 @@ export function UserMenu() {
 
   return (
     <div className="border-t border-[var(--border-subtle)] py-[var(--space-3)] px-[var(--space-3)] shrink-0 flex flex-col gap-[var(--space-2)]">
-      {canUpgrade ? (
-        <Button
-          variant="primary"
-          size="sm"
-          className="w-full justify-center gap-[var(--space-2)]"
-          onClick={goToBilling}
-        >
-          <Sparkles width={14} height={14} aria-hidden /> Upgrade to Personal
-        </Button>
-      ) : null}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
