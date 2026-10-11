@@ -1,0 +1,6 @@
+# graphify: что не строить в граф (сторонний код и сборки; .gitignore учитывается и так)
+backend/vendor/
+landing/
+deck/
+**/dist/
+**/node_modules/
