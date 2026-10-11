@@ -1,5 +1,6 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
+import { subscribeToTreeFold } from '../../lib/treeFold'
 import {
   Building2,
   ChevronDown,
@@ -320,18 +321,22 @@ function ClusterHeader({
 // usePersistentSet — a localStorage-backed Set<string>, mirroring
 // useExpandedNodes' read/write guards. Collapsing on reload (private mode /
 // quota) is acceptable, so failures fall back to empty.
+function readPersistentSet(key: string): Set<string> {
+  if (typeof window === 'undefined') return new Set()
+  try {
+    const raw = window.localStorage.getItem(key)
+    const parsed: unknown = raw ? JSON.parse(raw) : []
+    if (!Array.isArray(parsed)) return new Set()
+    return new Set(parsed.filter((v): v is string => typeof v === 'string'))
+  } catch {
+    return new Set()
+  }
+}
+
 function usePersistentSet(key: string) {
-  const [set, setSet] = useState<Set<string>>(() => {
-    if (typeof window === 'undefined') return new Set()
-    try {
-      const raw = window.localStorage.getItem(key)
-      const parsed: unknown = raw ? JSON.parse(raw) : []
-      if (!Array.isArray(parsed)) return new Set()
-      return new Set(parsed.filter((v): v is string => typeof v === 'string'))
-    } catch {
-      return new Set()
-    }
-  })
+  const [set, setSet] = useState<Set<string>>(() => readPersistentSet(key))
+  // HomeOS fold-all rewrites storage directly — re-read when it fires.
+  useEffect(() => subscribeToTreeFold(() => setSet(readPersistentSet(key))), [key])
   const toggle = useCallback((k: string) => {
     setSet((prev) => {
       const next = new Set(prev)

@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { subscribeToTreeFold } from './treeFold'
 
 // Per-space, localStorage-backed set of expanded page-tree node IDs.
 // Storage shape: `tela.expanded.<spaceId>` -> JSON array of numeric ids.
@@ -37,6 +38,12 @@ export function useExpandedNodes(spaceId: number | null | undefined) {
     setPrevSpaceId(spaceId)
     setExpanded(spaceId != null ? read(spaceId) : new Set())
   }
+
+  // HomeOS fold-all rewrites storage directly — re-read when it fires.
+  useEffect(
+    () => subscribeToTreeFold(() => setExpanded(spaceId != null ? read(spaceId) : new Set())),
+    [spaceId],
+  )
 
   const toggle = useCallback(
     (id: number) => {

@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react'
 import { Link, useParams, useRouterState } from '@tanstack/react-router'
 import {
+  ChevronsDownUp,
+  ChevronsUpDown,
   FilePlus,
   FolderPlus,
   Home,
@@ -26,6 +29,7 @@ import { emitOpenNewSpace } from '../../lib/newSpaceEvent'
 import { emitOpenPalette } from '../../lib/paletteEvent'
 import { formatShortcut } from '../../lib/useGlobalShortcut'
 import { cn } from '../../lib/utils'
+import { isTreeFolded, subscribeToTreeFold, toggleTreeFold } from '../../lib/treeFold'
 
 export function Sidebar({
   open = false,
@@ -84,6 +88,8 @@ export function Sidebar({
               className="text-[length:var(--text-base)] font-medium leading-none tracking-[-0.01em]"
             />
           </Link>
+          <div className="flex items-center gap-[var(--space-1)]">
+            <FoldAllButton />
           {/* Single create affordance: a «+» in the corner opens New page / New space. */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -114,6 +120,7 @@ export function Sidebar({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          </div>
         </div>
         {/* Search reads as a field — the one input affordance up top. */}
         <Button
@@ -173,5 +180,26 @@ export function Sidebar({
           canonical host). */}
       <PoweredByTela className="px-[var(--space-3)] pb-[var(--space-2)] text-center" />
     </aside>
+  )
+}
+
+// HomeOS: fold every folder in the tree; a second click restores exactly what
+// was open before the first one.
+function FoldAllButton() {
+  const [folded, setFolded] = useState(isTreeFolded)
+  useEffect(() => subscribeToTreeFold(() => setFolded(isTreeFolded())), [])
+  const label = folded ? 'Expand folders back' : 'Collapse all folders'
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      className="h-[var(--space-7)] w-[var(--space-7)] p-0 justify-center"
+      aria-label={label}
+      aria-pressed={folded}
+      title={label}
+      onClick={toggleTreeFold}
+    >
+      {folded ? <ChevronsUpDown width={16} height={16} /> : <ChevronsDownUp width={16} height={16} />}
+    </Button>
   )
 }
