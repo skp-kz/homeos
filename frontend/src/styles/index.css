@@ -10,6 +10,7 @@
 @import './reader.css';
 @import './pdf.css';
 @import './keys.css';
+@import './homeos.css';
 
 @layer base {
   html,

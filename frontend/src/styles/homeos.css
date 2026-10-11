@@ -1,0 +1,19 @@
+/* HomeOS overrides — kept in one file so upstream tela merges stay simple. */
+
+@layer tokens {
+  :root {
+    /* Display face for headings and page titles (Jura, self-hosted via
+       @fontsource/jura; cyrillic included). Body text stays --font-sans. */
+    --font-heading: 'Jura', var(--font-sans);
+  }
+}
+
+@layer components {
+  /* Same specificity as the editor/reader heading rules, declared later → wins. */
+  .tela-milkdown .ProseMirror :is(h1, h2, h3, h4, h5, h6),
+  .tela-reader .tela-milkdown .ProseMirror :is(h1, h2, h3, h4),
+  .reader-title,
+  .homeos-heading {
+    font-family: var(--font-heading);
+  }
+}

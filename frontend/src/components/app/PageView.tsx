@@ -787,7 +787,7 @@ function PageViewer({
         >
           <h1
             className={cn(
-              'm-0 px-[var(--space-2)] py-[var(--space-2)]',
+              'homeos-heading m-0 px-[var(--space-2)] py-[var(--space-2)]',
               'text-[length:var(--text-3xl)] leading-[var(--leading-tight)] font-medium',
               'text-[var(--text-primary)]',
             )}
@@ -1939,7 +1939,7 @@ function PageEditor({ page, spaceId, draftRevId, onDeleted, isDeck, isSheet, scr
             // shrink-0: the title sits in a height-constrained flex column, and
             // a textarea is a shrinkable flex item — without this, flex compresses
             // it below its content and overflow-hidden clips the title to nothing.
-            'block w-full shrink-0 resize-none overflow-hidden bg-transparent',
+            'homeos-heading block w-full shrink-0 resize-none overflow-hidden bg-transparent',
             'rounded-[var(--radius-md)] border border-transparent outline-none',
             'px-[var(--space-2)] py-[var(--space-2)]',
             'text-[length:var(--text-3xl)] leading-[var(--leading-tight)] font-medium',
