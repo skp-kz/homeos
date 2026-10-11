@@ -1,0 +1,10 @@
+{
+  "name": "homeos",
+  "private": true,
+  "description": "HomeOS — монорепо: apps/shell (рельса приложений), apps/wiki → frontend/ (tela как есть, свой lockfile), services/tela → backend/ (Go)",
+  "workspaces": ["apps/shell"],
+  "scripts": {
+    "shell:dev": "npm run dev -w @homeos/shell",
+    "shell:build": "npm run build -w @homeos/shell"
+  }
+}

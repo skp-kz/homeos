@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* Тема — через data-theme на <html> (как в tela), переключается без пересборки. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Токены оболочки: серый wireframe из макета tela-os-ux (вариант 1 «док ОС»). Цвет — потом. */
+:root {
+  --bg: #f2f2f0;
+  --surface: #ffffff;
+  --rail: #e8e8e4;
+  --line: #d9d9d4;
+  --line-soft: #ebebe7;
+  --text: #222222;
+  --muted: #777777;
+  --accent: #222222;
+  --accent-text: #f2f2f0;
+  --hover: rgb(0 0 0 / 0.05);
+  --overlay: rgb(0 0 0 / 0.25);
+  --shadow: 0 12px 40px rgb(0 0 0 / 0.14);
+}
+[data-theme="dark"] {
+  --bg: #161615;
+  --surface: #1d1d1c;
+  --rail: #111110;
+  --line: #2e2e2c;
+  --line-soft: #262624;
+  --text: #e8e8e4;
+  --muted: #8f8f8a;
+  --accent: #e8e8e4;
+  --accent-text: #161615;
+  --hover: rgb(255 255 255 / 0.06);
+  --overlay: rgb(0 0 0 / 0.5);
+  --shadow: 0 12px 40px rgb(0 0 0 / 0.5);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-rail: var(--rail);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-hover: var(--hover);
+  --color-overlay: var(--overlay);
+  --shadow-pop: var(--shadow);
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* cmdk */
+[cmdk-item][data-selected="true"] {
+  background: var(--hover);
+}
+[cmdk-group-heading] {
+  padding: 8px 12px 4px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}

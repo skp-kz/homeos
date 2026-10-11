@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Сборка и установка HomeOS без Docker: Go-бэкенд + Vite-фронт → /opt/homeos, systemd + Caddy.
+# Сборка и установка HomeOS без Docker: services/tela (Go) + apps/wiki + apps/shell → /opt/homeos, systemd + Caddy.
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 export PATH=$PATH:/usr/local/go/bin
@@ -8,7 +8,8 @@ COMMIT=$(git rev-parse --short HEAD)
 
 # 1. Сборка
 (cd backend && go build -trimpath -ldflags "-s -w -X github.com/zcag/tela/backend/internal/api.Version=$VER -X github.com/zcag/tela/backend/internal/api.Commit=$COMMIT -X github.com/zcag/tela/backend/internal/api.BuildTime=$(date -u +%FT%TZ)" -o ../bin/tela ./cmd/tela)
-(cd frontend && npm ci --no-audit --no-fund && npm run build)
+(cd frontend && npm ci --no-audit --no-fund && npm run build)   # apps/wiki → frontend
+npm ci --no-audit --no-fund && npm run build -w @homeos/shell     # apps/shell
 
 # 2. Системный пользователь и БД (peer-auth по unix-сокету — без пароля)
 id tela >/dev/null 2>&1 || sudo useradd --system --home /var/lib/homeos --shell /usr/sbin/nologin tela
@@ -20,6 +21,8 @@ sudo -u postgres psql -q -d tela -c "create extension if not exists vector;"
 sudo install -d -o root -g root /opt/homeos/bin /opt/homeos/web
 sudo install -m 0755 bin/tela /opt/homeos/bin/tela
 sudo rsync -a --delete frontend/dist/ /opt/homeos/web/
+sudo install -d -o root -g root /opt/homeos/shell
+sudo rsync -a --delete apps/shell/dist/ /opt/homeos/shell/
 echo "$VER $COMMIT" | sudo tee /opt/homeos/VERSION >/dev/null
 sudo install -d -m 0755 -o root -g root /etc/homeos
 [ -f /etc/homeos/env ] || { sudo install -m 0600 -o root -g root /dev/null /etc/homeos/env; echo "!! /etc/homeos/env пуст — секреты кладёт Слава (см. env.example)"; }

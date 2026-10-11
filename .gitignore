@@ -16,3 +16,8 @@ app-*.png
 backend/tela
 backend/.vite/
 /bin/
+
+# HomeOS monorepo
+/node_modules/
+/apps/shell/node_modules/
+/apps/shell/dist/
