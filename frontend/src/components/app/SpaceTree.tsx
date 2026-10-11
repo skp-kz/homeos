@@ -170,7 +170,9 @@ export function SpaceTree({ activeSpaceId, activePageId }: SpaceTreeProps) {
     <SpaceRow
       key={space.id}
       space={space}
-      active={space.id === activeSpaceId}
+      // Highlight the space row only on the space's own page — on a page inside
+      // it the page row carries the highlight (no double highlight).
+      active={space.id === activeSpaceId && activePageId == null}
       activePageId={activePageId}
       hidden={hiddenIds.has(space.id)}
       staleLabel={staleLabelBySpace.get(space.id) ?? null}
