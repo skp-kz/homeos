@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { ImportSection } from '../components/app/ImportSection'
 import { SettingsApiKeysTab } from '../components/app/SettingsApiKeysTab'
-import { SettingsBillingTab } from '../components/app/SettingsBillingTab'
 import { SettingsAuditTab } from '../components/app/SettingsAuditTab'
 import { SettingsEventsTab } from '../components/app/SettingsEventsTab'
 import { SettingsErrorsTab } from '../components/app/SettingsErrorsTab'
@@ -173,14 +172,6 @@ const SYNC_TAB: SettingsTab = {
   render: () => <SettingsSyncTab />,
 }
 
-// Plan & usage — every account (personal + each org) carries a tier; available
-// to all users.
-const BILLING_TAB: SettingsTab = {
-  id: 'billing',
-  label: 'Plan & Usage',
-  render: () => <SettingsBillingTab />,
-}
-
 // Self-host Enterprise license — instance-admin. Install/view/remove the key that
 // unlocks ee-gated features on this instance.
 const LICENSE_TAB: SettingsTab = {
@@ -221,8 +212,8 @@ export function SettingsPage() {
   const licenses = useMyLicenses()
   const showLicenses = (licenses.data?.sales_enabled ?? false) || (licenses.data?.licenses.length ?? 0) > 0
   const groups = useMemo<SettingsGroup[]>(() => {
-    const account = [PROFILE_TAB, NOTIFICATIONS_TAB, FOLLOWING_TAB, BILLING_TAB, API_KEYS_TAB, IMPORT_TAB, SEARCH_INDEX_TAB, SUMMARIES_TAB, SYNC_TAB]
-    if (showLicenses) account.splice(4, 0, LICENSES_TAB) // after Plan & Usage
+    const account = [PROFILE_TAB, NOTIFICATIONS_TAB, FOLLOWING_TAB, API_KEYS_TAB, IMPORT_TAB, SEARCH_INDEX_TAB, SUMMARIES_TAB, SYNC_TAB]
+    if (showLicenses) account.splice(3, 0, LICENSES_TAB) // after Following (Plan & Usage скрыт в homeos)
     if (me.data?.is_instance_admin) {
       return [
         { label: 'Account', tabs: account },
