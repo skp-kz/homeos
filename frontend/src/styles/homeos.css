@@ -5,10 +5,36 @@
     /* Display face for headings and page titles (Jura, self-hosted via
        @fontsource/jura; cyrillic included). Body text stays --font-sans. */
     --font-heading: 'Jura', var(--font-sans);
+    /* Document body text (editor + reader). Didact Gothic ships one weight (400). */
+    --font-doc: 'Didact Gothic', var(--font-sans);
+    /* Sidebar spaces/folders tree. */
+    --font-tree: 'Ubuntu', var(--font-sans);
   }
 }
 
+/* Code blocks and inline code — every --font-mono consumer. Unlayered on purpose:
+   Tailwind's own theme layer also defines --font-mono and outranks the tokens layer. */
+:root {
+  --font-mono: 'Source Code Pro', ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+
+/* Spaces/folders tree. Unlayered and applied to every descendant: the rows are
+   <button>s whose font comes from a utility, so inheritance alone doesn't reach. */
+section[aria-label='Spaces'],
+section[aria-label='Spaces'] * {
+  font-family: var(--font-tree);
+}
+
 @layer components {
+  /* Document text: same specificity as editor.css' .ProseMirror rule, later → wins. */
+  .tela-milkdown .ProseMirror {
+    font-family: var(--font-doc);
+  }
+  /* Reader keeps its sans/serif preference: only the sans default is replaced. */
+  .tela-reader {
+    --reading-font-family: var(--font-doc);
+  }
+
   /* Same specificity as the editor/reader heading rules, declared later → wins. */
   .tela-milkdown .ProseMirror :is(h1, h2, h3, h4, h5, h6),
   .tela-reader .tela-milkdown .ProseMirror :is(h1, h2, h3, h4),
