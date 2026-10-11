@@ -6,13 +6,11 @@ import {
   Folder,
   FolderPlus,
   HelpCircle,
-  MessageSquarePlus,
   MonitorCog,
   Palette,
 } from 'lucide-react'
 import { registerCommand } from '../commands'
 import { emitOpenNewSpace } from '../newSpaceEvent'
-import { emitOpenFeedback } from '../feedbackEvent'
 import { cycleTheme, followSystem } from '../theme'
 
 registerCommand({
@@ -64,15 +62,6 @@ registerCommand({
       })),
     })
   },
-})
-
-registerCommand({
-  id: 'tela.send-feedback',
-  title: 'Send feedback',
-  subtitle: 'Tell the tela team',
-  icon: <MessageSquarePlus width={14} height={14} />,
-  keywords: ['feedback', 'bug', 'idea', 'suggestion', 'report', 'contact'],
-  run: () => emitOpenFeedback(),
 })
 
 registerCommand({
