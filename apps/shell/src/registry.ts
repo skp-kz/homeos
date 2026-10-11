@@ -14,6 +14,8 @@ export type AppDef = {
   sidebar?: ComponentType<AppViewProps>
   /** Экран приложения. Нет — заглушка «скоро». */
   view?: ComponentType<AppViewProps>
+  /** Хук счётчика на иконке в рельсе (например, сколько ждут решения). */
+  useBadge?: () => number
 }
 
 export type AppViewProps = {

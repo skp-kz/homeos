@@ -10,6 +10,12 @@ import {
 } from '@tanstack/react-router'
 import { apps } from './apps'
 import { Shell, appForPath } from './Shell'
+import '@fontsource/didact-gothic/400.css'
+import '@fontsource/jura/500.css'
+import '@fontsource/jura/600.css'
+import '@fontsource/ubuntu/400.css'
+import '@fontsource/ubuntu/500.css'
+import '@fontsource/source-code-pro/400.css'
 import './index.css'
 
 // Вкладка = URL. Один корневой маршрут-оболочка; приложение определяется по префиксу пути

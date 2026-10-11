@@ -18,7 +18,6 @@ export function Shell() {
   const theme = useShell((s) => s.theme)
   const lastPath = useShell((s) => s.lastPath)
   const rememberPath = useShell((s) => s.rememberPath)
-  const wikiTheme = useShell((s) => s.wikiTheme)
 
   const active = appForPath(location.pathname)
 
@@ -38,8 +37,8 @@ export function Shell() {
 
   useEffect(() => {
     const link = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
-    if (link) link.href = brandMark(wikiTheme)
-  }, [wikiTheme])
+    if (link) link.href = brandMark(theme)
+  }, [theme])
 
   useEffect(() => {
     if (active && !active.view) document.title = `${active.title} · HomeOS`

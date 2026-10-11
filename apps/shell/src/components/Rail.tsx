@@ -1,15 +1,16 @@
 import * as Tooltip from '@radix-ui/react-tooltip'
 import { motion } from 'motion/react'
-import { Command, Moon, Sun } from 'lucide-react'
+import { Command, Moon, Palette, Sun } from 'lucide-react'
 import type { AppDef } from '../registry'
 import { useShell } from '../store'
 import { cn } from '../lib/cn'
 
 const isMac = typeof navigator !== 'undefined' && /Mac|iP(hone|ad)/.test(navigator.platform)
 export const modKey = isMac ? '⌘' : 'Ctrl+'
+const THEME_LABEL = { warm: 'тёплая', light: 'светлая', dark: 'тёмная' } as const
 
-/** Знак HomeOS в цвете темы Wiki: тёплая — терракота, остальные — индиго. */
-export const brandMark = (wikiTheme: string) => (wikiTheme === 'warm' ? '/favicon-warm.svg?v=homeos2' : '/shell/favicon.svg?v=homeos2')
+/** Знак HomeOS в цвете темы: тёплая — терракота, светлая и тёмная — индиго. */
+export const brandMark = (theme: string) => (theme === 'warm' ? '/favicon-warm.svg?v=homeos2' : '/shell/favicon.svg?v=homeos2')
 
 function RailButton({
   label,
@@ -62,6 +63,16 @@ function RailButton({
   )
 }
 
+function RailBadge({ useBadge }: { useBadge: () => number }) {
+  const n = useBadge()
+  if (!n) return null
+  return (
+    <span className="absolute -top-2 -right-2.5 min-w-4 rounded-full bg-accent px-1 text-center font-[family-name:var(--font-ui)] text-[10px] leading-4 font-medium text-accent-text">
+      {n}
+    </span>
+  )
+}
+
 export function Rail({
   apps,
   activeId,
@@ -74,7 +85,6 @@ export function Rail({
   const theme = useShell((s) => s.theme)
   const toggleTheme = useShell((s) => s.toggleTheme)
   const togglePalette = useShell((s) => s.togglePalette)
-  const wikiTheme = useShell((s) => s.wikiTheme)
 
   return (
     <Tooltip.Provider delayDuration={300}>
@@ -82,27 +92,25 @@ export function Rail({
         aria-label="Приложения"
         className="flex w-[52px] shrink-0 flex-col items-center gap-1 border-r border-line bg-rail py-3"
       >
-        <img src={brandMark(wikiTheme)} alt="HomeOS" width={32} height={32} className="mb-2 size-8" />
-        {apps.map((app, i) => {
-          const Icon = app.icon
-          return (
-            <RailButton
-              key={app.id}
-              label={app.title}
-              hint={i < 9 ? `${modKey}${i + 1}` : undefined}
-              active={app.id === activeId}
-              onClick={() => onOpen(app)}
-            >
-              <Icon size={18} strokeWidth={1.75} />
-            </RailButton>
-          )
-        })}
+        <img src={brandMark(theme)} alt="HomeOS" width={32} height={32} className="mb-2 size-8" />
+        {apps.map((app, i) => (
+          <RailButton
+            key={app.id}
+            label={app.title}
+            hint={i < 9 ? `${modKey}${i + 1}` : undefined}
+            active={app.id === activeId}
+            onClick={() => onOpen(app)}
+          >
+            <app.icon size={18} strokeWidth={1.75} />
+            {app.useBadge ? <RailBadge useBadge={app.useBadge} /> : null}
+          </RailButton>
+        ))}
         <div className="mt-auto flex flex-col items-center gap-1">
           <RailButton label="Палитра" hint={`${modKey}K`} onClick={togglePalette}>
             <Command size={18} strokeWidth={1.75} />
           </RailButton>
-          <RailButton label={theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'} onClick={toggleTheme}>
-            {theme === 'dark' ? <Sun size={18} strokeWidth={1.75} /> : <Moon size={18} strokeWidth={1.75} />}
+          <RailButton label={`Тема: ${THEME_LABEL[theme]}`} hint="сменить" onClick={toggleTheme}>
+            {theme === 'dark' ? <Moon size={18} strokeWidth={1.75} /> : theme === 'light' ? <Sun size={18} strokeWidth={1.75} /> : <Palette size={18} strokeWidth={1.75} />}
           </RailButton>
         </div>
       </nav>

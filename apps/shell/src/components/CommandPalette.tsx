@@ -63,7 +63,7 @@ export function CommandPalette({ apps, onOpen }: { apps: AppDef[]; onOpen: (app:
                     <Command.Group heading="Команды">
                       <Item value="theme тема" onSelect={run(toggleTheme)}
                         icon={theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-                        label={theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'} />
+                        label={`Сменить тему (сейчас: ${theme === 'warm' ? 'тёплая' : theme === 'light' ? 'светлая' : 'тёмная'})`} />
                       <Item value="sidebar сайдбар панель" onSelect={run(toggleSidebar)}
                         icon={<PanelLeft size={16} />} label="Показать/скрыть сайдбар" hint={`${modKey}\\`} />
                       <Item value="reload перезагрузить" onSelect={run(() => location.reload())}

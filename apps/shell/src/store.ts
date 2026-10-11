@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-export type Theme = 'light' | 'dark'
+export type Theme = 'warm' | 'light' | 'dark'
 
 type ShellState = {
   theme: Theme
@@ -21,8 +21,9 @@ type ShellState = {
   toggleSidebar: () => void
 }
 
+const NEXT_THEME: Record<Theme, Theme> = { warm: 'light', light: 'dark', dark: 'warm' }
 const systemTheme = (): Theme =>
-  typeof matchMedia !== 'undefined' && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  typeof matchMedia !== 'undefined' && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'warm'
 
 export const useShell = create<ShellState>()(
   persist(
@@ -34,7 +35,7 @@ export const useShell = create<ShellState>()(
       wikiTheme: 'light',
       setWikiTheme: (wikiTheme) => set({ wikiTheme }),
       setTheme: (theme) => set({ theme }),
-      toggleTheme: () => set((s) => ({ theme: s.theme === 'dark' ? 'light' : 'dark' })),
+      toggleTheme: () => set((s) => ({ theme: NEXT_THEME[s.theme] ?? 'warm' })),
       setPaletteOpen: (paletteOpen) => set({ paletteOpen }),
       togglePalette: () => set((s) => ({ paletteOpen: !s.paletteOpen })),
       rememberPath: (appId, path) =>

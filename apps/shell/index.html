@@ -9,7 +9,7 @@
       // Тема до первого рендера — без вспышки.
       try {
         const s = JSON.parse(localStorage.getItem('homeos.shell') || '{}').state || {}
-        const t = s.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        const t = s.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'warm')
         document.documentElement.dataset.theme = t
       } catch {}
     </script>
