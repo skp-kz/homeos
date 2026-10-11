@@ -36,7 +36,7 @@ export function ShareLayout({ token, share, children }: ShareLayoutProps) {
   // on the canonical host it stays the tela wordmark → marketing landing.
   const org = useHostContext().data?.org ?? null
   const brandHref = org ? '/' : telaHome
-  const brandLabel = org ? `${org.name} home` : 'tela home'
+  const brandLabel = org ? `${org.name} home` : 'HomeOS home'
   const treeEnabled = share.include_descendants
   const tree = useShareTree(token, treeEnabled)
   const pages = tree.data?.pages ?? []

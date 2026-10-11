@@ -8,6 +8,9 @@ import { cn } from '../lib/cn'
 const isMac = typeof navigator !== 'undefined' && /Mac|iP(hone|ad)/.test(navigator.platform)
 export const modKey = isMac ? '⌘' : 'Ctrl+'
 
+/** Знак HomeOS в цвете темы Wiki: тёплая — терракота, остальные — индиго. */
+export const brandMark = (wikiTheme: string) => (wikiTheme === 'warm' ? '/favicon-warm.svg?v=homeos2' : '/shell/favicon.svg?v=homeos2')
+
 function RailButton({
   label,
   hint,
@@ -71,6 +74,7 @@ export function Rail({
   const theme = useShell((s) => s.theme)
   const toggleTheme = useShell((s) => s.toggleTheme)
   const togglePalette = useShell((s) => s.togglePalette)
+  const wikiTheme = useShell((s) => s.wikiTheme)
 
   return (
     <Tooltip.Provider delayDuration={300}>
@@ -78,9 +82,7 @@ export function Rail({
         aria-label="Приложения"
         className="flex w-[52px] shrink-0 flex-col items-center gap-1 border-r border-line bg-rail py-3"
       >
-        <div className="mb-2 flex size-8 items-center justify-center rounded-md bg-accent font-mono text-[11px] font-semibold text-accent-text">
-          OS
-        </div>
+        <img src={brandMark(wikiTheme)} alt="HomeOS" width={32} height={32} className="mb-2 size-8" />
         {apps.map((app, i) => {
           const Icon = app.icon
           return (

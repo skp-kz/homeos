@@ -80,7 +80,7 @@ export function Sidebar({
         <div className="mb-[var(--space-2)] flex items-center justify-between gap-[var(--space-2)]">
           <Link
             to="/"
-            aria-label="tela — home"
+            aria-label="HomeOS — home"
             className="inline-flex items-center px-[var(--space-1)] no-underline transition-opacity duration-[var(--duration-fast)] hover:opacity-80"
           >
             <BrandLogo

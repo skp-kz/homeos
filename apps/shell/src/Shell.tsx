@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import { apps } from './apps'
 import type { AppDef } from './registry'
-import { Rail } from './components/Rail'
+import { Rail, brandMark } from './components/Rail'
 import { AppFrame } from './components/AppFrame'
 import { CommandPalette } from './components/CommandPalette'
 import { useShell } from './store'
@@ -18,6 +18,7 @@ export function Shell() {
   const theme = useShell((s) => s.theme)
   const lastPath = useShell((s) => s.lastPath)
   const rememberPath = useShell((s) => s.rememberPath)
+  const wikiTheme = useShell((s) => s.wikiTheme)
 
   const active = appForPath(location.pathname)
 
@@ -34,6 +35,11 @@ export function Shell() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme
   }, [theme])
+
+  useEffect(() => {
+    const link = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
+    if (link) link.href = brandMark(wikiTheme)
+  }, [wikiTheme])
 
   useEffect(() => {
     if (active && !active.view) document.title = `${active.title} · HomeOS`

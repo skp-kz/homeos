@@ -16,25 +16,14 @@ export function BrandMark({
       height={size}
       fill="none"
       role="img"
-      aria-label="tela"
+      aria-label="HomeOS"
       className={className}
     >
       <rect width="512" height="512" rx="112" fill="var(--accent)" />
-      <g transform="translate(-2.5,-38.5)">
-        <path
-          fill="var(--accent-fg)"
-          d="M150 240 L196 188 Q205 178 218 178 H356 Q378 178 366 200 L332 240 Q325 250 312 250 H162 Q140 250 150 240 Z"
-        />
-        <path
-          fill="var(--accent-fg)"
-          d="M238 250 H296 Q300 250 300 268 V396 Q300 414 281 410 L245 402 Q226 398 226 380 V272 Q226 252 238 250 Z"
-        />
-        <path
-          fill="#1e1b4b"
-          fillOpacity="0.4"
-          d="M250 250 H312 Q325 250 332 240 L304 270 Q297 278 297 290 V324 Z"
-        />
-      </g>
+      {/* HomeOS «H»: two rounded uprights + a crossbar tucked under the left one. */}
+      <path fill="var(--accent-fg)" d="M168 224H280Q296 224 296 240V272Q296 288 280 288H168Z" />
+      <path fill="var(--accent-fg)" d="M146 128H174Q192 128 192 146V366Q192 384 174 384H146Q128 384 128 366V146Q128 128 146 128Z" />
+      <path fill="var(--accent-fg)" d="M338 128H366Q384 128 384 146V366Q384 384 366 384H338Q320 384 320 366V146Q320 128 338 128Z" />
     </svg>
   )
 }

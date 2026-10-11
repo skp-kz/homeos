@@ -10,6 +10,9 @@ type ShellState = {
   lastPath: Record<string, string>
   /** Счётчик-«толчок» для сворачивания сайдбара активного приложения (⌘\ и кнопка). */
   sidebarToggle: number
+  /** Тема Wiki (tela): от неё зависит цвет знака HomeOS в рельсе и во вкладке. */
+  wikiTheme: string
+  setWikiTheme: (t: string) => void
   setTheme: (t: Theme) => void
   toggleTheme: () => void
   setPaletteOpen: (open: boolean) => void
@@ -28,6 +31,8 @@ export const useShell = create<ShellState>()(
       paletteOpen: false,
       lastPath: {},
       sidebarToggle: 0,
+      wikiTheme: 'light',
+      setWikiTheme: (wikiTheme) => set({ wikiTheme }),
       setTheme: (theme) => set({ theme }),
       toggleTheme: () => set((s) => ({ theme: s.theme === 'dark' ? 'light' : 'dark' })),
       setPaletteOpen: (paletteOpen) => set({ paletteOpen }),
@@ -38,7 +43,7 @@ export const useShell = create<ShellState>()(
     }),
     {
       name: 'homeos.shell',
-      partialize: (s) => ({ theme: s.theme, lastPath: s.lastPath }),
+      partialize: (s) => ({ theme: s.theme, lastPath: s.lastPath, wikiTheme: s.wikiTheme }),
     },
   ),
 )

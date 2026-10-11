@@ -62,7 +62,7 @@ export function useHeadMeta({
     const img = toAbsolute(image)
     addMeta('name', 'description', description)
     addLink('canonical', canonical)
-    addMeta('property', 'og:site_name', 'tela')
+    addMeta('property', 'og:site_name', 'HomeOS')
     addMeta('property', 'og:title', title)
     addMeta('property', 'og:description', description)
     addMeta('property', 'og:type', ogType)

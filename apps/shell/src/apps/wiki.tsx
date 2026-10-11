@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useRouter } from '@tanstack/react-router'
 import type { AppViewProps } from '../registry'
 import { attachShellKeys } from '../lib/keyboard'
+import { useShell } from '../store'
 
 // Wiki = tela как есть, в iframe того же origin. Caddy отдаёт tela на любой документ, который
 // грузится во фрейм (Sec-Fetch-Dest: iframe), поэтому '/spaces/2/pages/12' внутри фрейма —
@@ -38,7 +39,8 @@ export function WikiView({ app, subpath, active }: AppViewProps) {
       if (cur.pathname.startsWith(app.route) && cur.href !== href) {
         void router.navigate({ href, replace: true })
       }
-      if (w.document.title) document.title = `${w.document.title} · HomeOS`
+      const t = w.document.title.replace(/\s+[—·-]\s+HomeOS$/, '')
+      document.title = t && t !== 'HomeOS' ? `${t} · HomeOS` : 'HomeOS'
     }
 
     const onLoad = () => {
@@ -48,6 +50,12 @@ export function WikiView({ app, subpath, active }: AppViewProps) {
       if (!w) return
       try {
         detachKeys = attachShellKeys(w)
+        // Тема tela → цвет знака HomeOS в оболочке (вкладка, рельса).
+        const root = w.document.documentElement
+        const syncTheme = () => useShell.getState().setWikiTheme(root.getAttribute('data-theme') ?? 'light')
+        syncTheme()
+        const themeObs = new MutationObserver(syncTheme)
+        themeObs.observe(root, { attributes: true, attributeFilter: ['data-theme'] })
         const h = w.history
         const push = h.pushState.bind(h)
         const replace = h.replaceState.bind(h)
@@ -61,6 +69,7 @@ export function WikiView({ app, subpath, active }: AppViewProps) {
         }
         w.addEventListener('popstate', report)
         restore = () => {
+          themeObs.disconnect()
           h.pushState = push
           h.replaceState = replace
           w.removeEventListener('popstate', report)

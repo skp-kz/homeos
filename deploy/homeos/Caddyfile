@@ -64,6 +64,8 @@
 	}
 	handle @wiki_file {
 		root * /opt/homeos/web
+		# Иконки и прочие нехешированные файлы: короткий кэш (Cloudflare иначе держит 4 ч).
+		header Cache-Control "public, max-age=300"
 		file_server
 	}
 	# Публичные/служебные страницы tela открываются сами по себе (ссылки из писем, шаринг).
@@ -90,6 +92,7 @@
 	}
 	handle /shell/* {
 		root * /opt/homeos
+		header Cache-Control "public, max-age=300"
 		file_server
 	}
 	handle {

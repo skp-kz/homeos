@@ -23,7 +23,7 @@ export function PublicShell({
   const telaHome = useTelaHomeHref()
   const org = useHostContext().data?.org ?? null
   const brandHref = org ? '/' : telaHome
-  const brandLabel = org ? `${org.name} home` : 'tela home'
+  const brandLabel = org ? `${org.name} home` : 'HomeOS home'
   return (
     <div className="min-h-dvh flex flex-col bg-[var(--surface-1)] text-[var(--text-primary)]">
       <header className="flex items-center justify-between px-[var(--space-6)] py-[var(--space-3)] border-b border-[var(--border-subtle)] shrink-0">

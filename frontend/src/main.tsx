@@ -10,6 +10,7 @@ import '@fontsource/source-code-pro/600.css'
 import '@fontsource/ubuntu/400.css'
 import '@fontsource/ubuntu/500.css'
 import './styles/index.css'
+import { syncFaviconWithTheme } from './lib/homeosFavicon'
 import { subscribeToAuthRequired } from './lib/api'
 import { installGlobalErrorReporting, reloadOnceForStaleChunk } from './lib/client-errors'
 import { initTheme } from './lib/theme'
@@ -45,6 +46,8 @@ subscribeToAuthRequired((detail) => {
   queryClient.setQueryData(authKeys.me(), null)
   void router.navigate({ to: '/login', search: { next: detail.next } })
 })
+
+syncFaviconWithTheme()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

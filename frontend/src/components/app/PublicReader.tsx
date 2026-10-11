@@ -279,7 +279,7 @@ export function PublicReaderView({
           ) : null}
           <a
             href={telaHome}
-            aria-label="tela home"
+            aria-label="HomeOS home"
             // shrink-0: a flex child shrinks below its content by default, so on
             // a phone the wordmark was squeezed until its text spilled out of its
             // own box and collided with the trailing controls. The space name
@@ -354,7 +354,7 @@ function PublicDeckView({
         <span className="flex min-w-0 items-center gap-[var(--space-2)]">
           <a
             href={telaHome ?? '/'}
-            aria-label="tela home"
+            aria-label="HomeOS home"
             className="font-[family-name:var(--font-sans)] text-[length:var(--text-base)] font-medium text-[var(--text-primary)] no-underline hover:opacity-70"
           >
             tela
