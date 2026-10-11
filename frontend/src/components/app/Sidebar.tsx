@@ -73,16 +73,48 @@ export function Sidebar({
       )}
     >
       <div className="px-[var(--space-3)] pt-[var(--space-4)] flex flex-col gap-[var(--space-1)]">
-        <Link
-          to="/"
-          aria-label="tela — home"
-          className="mb-[var(--space-2)] inline-flex items-center px-[var(--space-1)] no-underline transition-opacity duration-[var(--duration-fast)] hover:opacity-80"
-        >
-          <BrandLogo
-            size={20}
-            className="text-[length:var(--text-base)] font-medium leading-none tracking-[-0.01em]"
-          />
-        </Link>
+        <div className="mb-[var(--space-2)] flex items-center justify-between gap-[var(--space-2)]">
+          <Link
+            to="/"
+            aria-label="tela — home"
+            className="inline-flex items-center px-[var(--space-1)] no-underline transition-opacity duration-[var(--duration-fast)] hover:opacity-80"
+          >
+            <BrandLogo
+              size={20}
+              className="text-[length:var(--text-base)] font-medium leading-none tracking-[-0.01em]"
+            />
+          </Link>
+          {/* Single create affordance: a «+» in the corner opens New page / New space. */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-[var(--space-7)] w-[var(--space-7)] p-0 justify-center"
+                aria-label="Create new"
+                title="Create new"
+              >
+                <Plus width={16} height={16} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="min-w-[12rem]">
+              <DropdownMenuItem onSelect={() => emitOpenNewPage()}>
+                <FilePlus width={14} height={14} />
+                <span className="flex-1">Page</span>
+                <kbd
+                  aria-hidden
+                  className="text-[length:var(--text-xs)] text-[var(--text-muted)] font-[family-name:var(--font-sans)]"
+                >
+                  {newPageShortcut}
+                </kbd>
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => emitOpenNewSpace()}>
+                <FolderPlus width={14} height={14} />
+                <span className="flex-1">Space</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
         {/* Search reads as a field — the one input affordance up top. */}
         <Button
           variant="secondary"
@@ -115,38 +147,6 @@ export function Sidebar({
             <span className="flex-1 text-left">Ask</span>
           </Link>
         </Button>
-        {/* New page is one of the two most-used actions; the menu folds New
-            space in beside it so the nav carries a single create affordance. */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="w-full justify-start"
-              aria-label="Create new"
-              title="Create new"
-            >
-              <Plus width={14} height={14} />
-              <span className="flex-1 text-left">New…</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="min-w-[12rem]">
-            <DropdownMenuItem onSelect={() => emitOpenNewPage()}>
-              <FilePlus width={14} height={14} />
-              <span className="flex-1">Page</span>
-              <kbd
-                aria-hidden
-                className="text-[length:var(--text-xs)] text-[var(--text-muted)] font-[family-name:var(--font-sans)]"
-              >
-                {newPageShortcut}
-              </kbd>
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => emitOpenNewSpace()}>
-              <FolderPlus width={14} height={14} />
-              <span className="flex-1">Space</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
         <Button asChild variant="ghost" size="sm" className={cn('w-full justify-start', navActive('/', true) && activeRow)}>
           <Link to="/" aria-label="Home" title="Home">
             <Home width={14} height={14} />

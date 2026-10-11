@@ -16,7 +16,6 @@ import { subscribeToToggleSidebar } from '../lib/sidebarEvent'
 import { AppCommandHost } from '../components/app/AppCommandHost'
 import { SpaceView } from '../components/app/SpaceView'
 import { KeymapHost } from '../components/app/KeymapHost'
-import { BrandLogo } from '../components/BrandLogo'
 import { NotificationBell } from '../components/app/NotificationBell'
 import { EmptyState } from '../components/ui/empty-state'
 const OrgManageView = lazy(() =>
@@ -193,13 +192,6 @@ const appLayoutRoute = createRoute({
               >
                 <PanelLeft size="1.1em" aria-hidden />
               </button>
-              <Link
-                to="/"
-                aria-label="tela home"
-                className="inline-flex rounded-[var(--radius-xs)] no-underline transition-opacity duration-[var(--duration-fast)] hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-              >
-                <BrandLogo size={20} />
-              </Link>
             </h1>
             <div className="flex items-center gap-[var(--space-2)]">
               <NotificationBell />
