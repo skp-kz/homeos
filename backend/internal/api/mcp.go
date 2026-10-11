@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"sync"
@@ -41,8 +42,13 @@ const (
 // backs all sessions; identity is per-request, carried in TokenInfo.
 func (s *Server) MCPHandler() http.Handler {
 	server := s.newMCPServer()
+	// The SDK's DNS-rebinding guard 403s any non-loopback Host when the listener
+	// is loopback. Behind a same-host reverse proxy (backend on 127.0.0.1, public
+	// Host forwarded by Caddy) that rejects every real request, so
+	// TELA_MCP_BEHIND_PROXY=1 turns it off; the endpoint still requires a bearer.
 	streamable := mcp.NewStreamableHTTPHandler(
-		func(*http.Request) *mcp.Server { return server }, nil)
+		func(*http.Request) *mcp.Server { return server },
+		&mcp.StreamableHTTPOptions{DisableLocalhostProtection: os.Getenv("TELA_MCP_BEHIND_PROXY") == "1"})
 	opts := &sdkauth.RequireBearerTokenOptions{}
 	if s.oauth != nil {
 		// On 401, point clients at our Protected Resource Metadata so the OAuth
