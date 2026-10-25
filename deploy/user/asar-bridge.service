@@ -1,0 +1,11 @@
+[Unit]
+Description=Asar client (Claude Code agent)
+After=network-online.target
+[Service]
+WorkingDirectory=/home/dev/work/asar
+Environment=PATH=/home/dev/.local/bin:/usr/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/node /home/dev/.asar/bridge/tools/claude-bridge/bridge.cjs
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=default.target
